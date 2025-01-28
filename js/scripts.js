@@ -14,7 +14,7 @@ const saveTodo = (text) => {
     const todoTitle = document.createElement("h3");
     todoTitle.textContent = text;
     todo.appendChild(todoTitle);
-
+    
     const doneBtn = document.createElement("button");
     doneBtn.classList.add("finish-todo");
     doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -25,20 +25,34 @@ const saveTodo = (text) => {
     editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
     todo.appendChild(editBtn);
 
-    const removeBtn = document.createElement("button");
-    removeBtn.classList.add("remove-todo");
-    removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-    todo.appendChild(removeBtn);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("remove-todo");
+    deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    todo.appendChild(deleteBtn);
     
     todoList.appendChild(todo);
+
+    todoInput.value = '';
+    todoInput.focus();
 };
+
+
 
 // Eventos
 todoForm.addEventListener("submit",(e) => {
     e.preventDefault();
 
-    const inputValue = todoInput.value;    
-    if(inputValue){        
+    const inputValue = todoInput.value;
+    if(inputValue){
         saveTodo(inputValue);
+    };    
+});
+
+document.addEventListener("click", (e) => {
+    const targetEl = e.target;
+    const parentEl = targetEl.closest("div"); //Selecionar o elemento pai Div mais próximo
+    
+    if(targetEl.classList.contains("finish-todo")){
+        parentEl.classList.toggle("done");
     }
 });
